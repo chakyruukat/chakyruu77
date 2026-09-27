@@ -1,1 +1,321 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Аскар & Ажар | Үйлөнүү тою</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html,body{
+    width:100%;
+    min-height:100%;
+    background:#211d1a;
+    overflow-x:hidden;
+}
+
+body{
+    font-family:Georgia,"Times New Roman",serif;
+}
+
+/* АЧУУ ЭКРАНЫ */
+#opening{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+        radial-gradient(circle at 50% 30%,#f5dfc5 0,#b98b62 35%,#30251e 100%);
+    transition:opacity 1.2s ease,visibility 1.2s ease;
+}
+
+#opening.hide{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+.envelope{
+    width:min(88vw,430px);
+    padding:55px 25px 45px;
+    text-align:center;
+    border-radius:8px;
+    background:
+        linear-gradient(145deg,#f6e7d5,#d9b995);
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.45),
+        inset 0 0 40px rgba(255,255,255,.25);
+    position:relative;
+}
+
+.envelope:before{
+    content:"";
+    position:absolute;
+    left:8%;
+    right:8%;
+    top:18%;
+    height:1px;
+    background:rgba(100,65,40,.25);
+}
+
+.names-small{
+    color:#6b4b36;
+    font-size:25px;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    color:#86654d;
+    font-size:12px;
+    letter-spacing:5px;
+    margin-bottom:45px;
+}
+
+.seal{
+    width:72px;
+    height:72px;
+    border-radius:50%;
+    margin:0 auto 28px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#8b5b38;
+    color:#fff0dc;
+    font-size:28px;
+    box-shadow:0 8px 25px rgba(70,40,20,.35);
+}
+
+.open-button{
+    border:0;
+    border-radius:40px;
+    padding:15px 65px;
+    background:#75472a;
+    color:white;
+    font-size:18px;
+    letter-spacing:3px;
+    cursor:pointer;
+    box-shadow:0 8px 25px rgba(70,35,15,.35);
+}
+
+.open-button:active{
+    transform:scale(.96);
+}
+
+/* ЧАКЫРУУ */
+#invitation{
+    width:100%;
+    min-height:100vh;
+    background:#eee0cf;
+}
+
+.invitation-image{
+    display:block;
+    width:100%;
+    height:auto;
+}
+
+/* Музыка баскычы */
+#musicButton{
+    position:fixed;
+    right:18px;
+    top:18px;
+    z-index:5000;
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.3);
+    background:rgba(70,45,30,.85);
+    color:#fff;
+    font-size:23px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+}
+
+/* төмөн жагындагы майда индикатор */
+#scrollHint{
+    position:fixed;
+    bottom:22px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:4000;
+    color:white;
+    font-size:12px;
+    letter-spacing:3px;
+    opacity:.8;
+    transition:opacity .8s;
+}
+
+#scrollHint.hide{
+    opacity:0;
+}
+</style>
+</head>
+
+<body>
+
+<!-- АЧУУ ЭКРАНЫ -->
+<div id="opening">
+
+    <div class="envelope">
+
+        <div class="names-small">
+            Аскар & Ажар
+        </div>
+
+        <div class="subtitle">
+            ҮЙЛӨНҮҮ ТОЮ
+        </div>
+
+        <div class="seal">
+            ♡
+        </div>
+
+        <button class="open-button" id="openButton">
+            АЧУУ
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ЧАКЫРУУ -->
+<main id="invitation">
+
+    <img
+        src="assets/invitation.png"
+        alt="Аскар жана Ажардын үйлөнүү тоюна чакыруу"
+        class="invitation-image"
+    >
+
+</main>
+
+
+<!-- МУЗЫКА -->
+<audio id="music" loop preload="auto">
+    <source src="assets/wedding-music.mp3" type="audio/mpeg">
+</audio>
+
+
+<!-- МУЗЫКА БАСҚЫЧЫ -->
+<button id="musicButton" aria-label="Музыканы башкаруу">
+    ♫
+</button>
+
+
+<div id="scrollHint">
+    ↓
+</div>
+
+
+<script>
+
+const opening = document.getElementById("opening");
+const openButton = document.getElementById("openButton");
+const music = document.getElementById("music");
+const musicButton = document.getElementById("musicButton");
+const scrollHint = document.getElementById("scrollHint");
+
+let scrolling = false;
+let animationFrame = null;
+
+
+/* АЧУУ */
+openButton.addEventListener("click", async function(){
+
+    /* Конверт жабылат */
+    opening.classList.add("hide");
+
+    /* Музыка башталат */
+    try{
+        await music.play();
+        musicButton.textContent = "Ⅱ";
+    }catch(error){
+        musicButton.textContent = "♫";
+    }
+
+    /* Бир аздан кийин автоматтык жылуу */
+    setTimeout(function(){
+        startAutoScroll();
+    },1200);
+
+});
+
+
+/* АВТОМАТТЫК ЖЫЛУУ */
+function startAutoScroll(){
+
+    if(scrolling) return;
+
+    scrolling = true;
+
+    const speed = 0.45;
+
+    function move(){
+
+        const current = window.scrollY;
+
+        const maxScroll =
+            document.documentElement.scrollHeight -
+            window.innerHeight;
+
+        if(current >= maxScroll){
+
+            scrolling = false;
+            scrollHint.classList.add("hide");
+
+            return;
+        }
+
+        window.scrollTo(
+            0,
+            current + speed
+        );
+
+        animationFrame =
+            requestAnimationFrame(move);
+    }
+
+    animationFrame =
+        requestAnimationFrame(move);
+}
+
+
+/* МУЗЫКАНЫ КОЛ МЕНЕН БАШКАРУУ */
+musicButton.addEventListener("click",function(){
+
+    if(music.paused){
+
+        music.play().then(function(){
+
+            musicButton.textContent = "Ⅱ";
+
+        }).catch(function(){
+
+            musicButton.textContent = "♫";
+
+        });
+
+    }else{
+
+        music.pause();
+
+        musicButton.textContent = "♫";
+    }
+
+});
+
+</script>
+
+</body>
+</html>
