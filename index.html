@@ -2,20 +2,19 @@
 <html lang="ky">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>Аскар & Ажар | Үйлөнүү тою</title>
 
 <style>
 *{
     box-sizing:border-box;
-    margin:0;
-    padding:0;
 }
 
 html,body{
+    margin:0;
+    padding:0;
     width:100%;
-    min-height:100%;
     background:#211d1a;
     overflow-x:hidden;
 }
@@ -24,17 +23,29 @@ body{
     font-family:Georgia,"Times New Roman",serif;
 }
 
-/* АЧУУ ЭКРАНЫ */
+/* =========================
+   АЧУУ ЭКРАНЫ
+========================= */
+
 #opening{
     position:fixed;
     inset:0;
     z-index:9999;
+
     display:flex;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
+
     background:
-        radial-gradient(circle at 50% 30%,#f5dfc5 0,#b98b62 35%,#30251e 100%);
-    transition:opacity 1.2s ease,visibility 1.2s ease;
+        linear-gradient(
+            rgba(45,30,20,.15),
+            rgba(45,30,20,.45)
+        ),
+        url("assets/invitation.png") center top/cover no-repeat;
+
+    transition:
+        opacity 1s ease,
+        visibility 1s ease;
 }
 
 #opening.hide{
@@ -43,136 +54,387 @@ body{
     pointer-events:none;
 }
 
-.envelope{
-    width:min(88vw,430px);
-    padding:55px 25px 45px;
+.open-card{
+    width:88%;
+    max-width:430px;
+
     text-align:center;
-    border-radius:8px;
-    background:
-        linear-gradient(145deg,#f6e7d5,#d9b995);
+
+    padding:42px 25px;
+
+    background:rgba(245,230,210,.94);
+
+    border-radius:12px;
+
     box-shadow:
-        0 25px 80px rgba(0,0,0,.45),
-        inset 0 0 40px rgba(255,255,255,.25);
-    position:relative;
+        0 25px 70px rgba(0,0,0,.5);
 }
 
-.envelope:before{
-    content:"";
-    position:absolute;
-    left:8%;
-    right:8%;
-    top:18%;
-    height:1px;
-    background:rgba(100,65,40,.25);
-}
-
-.names-small{
-    color:#6b4b36;
-    font-size:25px;
+.open-names{
+    font-size:30px;
+    color:#6d4931;
     margin-bottom:8px;
 }
 
-.subtitle{
-    color:#86654d;
-    font-size:12px;
+.open-subtitle{
+    font-size:11px;
     letter-spacing:5px;
-    margin-bottom:45px;
+    color:#87644c;
+    margin-bottom:35px;
 }
 
 .seal{
-    width:72px;
-    height:72px;
+    width:70px;
+    height:70px;
+    margin:auto;
+    margin-bottom:25px;
+
     border-radius:50%;
-    margin:0 auto 28px;
+
+    background:#81502f;
+    color:#f9ead9;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    background:#8b5b38;
-    color:#fff0dc;
+
     font-size:28px;
-    box-shadow:0 8px 25px rgba(70,40,20,.35);
 }
 
-.open-button{
-    border:0;
-    border-radius:40px;
+.open-btn{
+    border:none;
     padding:15px 65px;
-    background:#75472a;
+
+    border-radius:40px;
+
+    background:#744625;
     color:white;
-    font-size:18px;
+
+    font-size:17px;
     letter-spacing:3px;
+
     cursor:pointer;
-    box-shadow:0 8px 25px rgba(70,35,15,.35);
+
+    box-shadow:0 7px 20px rgba(80,40,20,.35);
 }
 
-.open-button:active{
+.open-btn:active{
     transform:scale(.96);
 }
 
-/* ЧАКЫРУУ */
-#invitation{
+/* =========================
+   НЕГИЗГИ ЧАКЫРУУ
+========================= */
+
+.invitation{
+    position:relative;
     width:100%;
-    min-height:100vh;
+    max-width:900px;
+    margin:auto;
+
     background:#eee0cf;
 }
 
-.invitation-image{
+.invitation img{
     display:block;
     width:100%;
     height:auto;
 }
 
-/* Музыка баскычы */
-#musicButton{
+/* =========================
+   МУЗЫКА
+========================= */
+
+#musicBtn{
     position:fixed;
-    right:18px;
+
     top:18px;
-    z-index:5000;
-    width:55px;
-    height:55px;
+    right:18px;
+
+    width:58px;
+    height:58px;
+
     border-radius:50%;
+
     border:1px solid rgba(255,255,255,.3);
-    background:rgba(70,45,30,.85);
-    color:#fff;
+
+    background:rgba(91,55,34,.9);
+
+    color:white;
+
     font-size:23px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+
+    z-index:7000;
+
     cursor:pointer;
 }
 
-/* төмөн жагындагы майда индикатор */
-#scrollHint{
-    position:fixed;
-    bottom:22px;
-    left:50%;
-    transform:translateX(-50%);
-    z-index:4000;
+/* =========================
+   ЧЫНЫГЫ КНОПКАЛАР
+========================= */
+
+.real-btn{
+    position:absolute;
+
+    border:none;
+
+    border-radius:30px;
+
+    background:#754526;
+
     color:white;
-    font-size:12px;
-    letter-spacing:3px;
-    opacity:.8;
-    transition:opacity .8s;
+
+    font-size:13px;
+
+    padding:13px 20px;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 5px 15px rgba(70,35,15,.35);
+
+    z-index:20;
+
+    text-decoration:none;
+
+    text-align:center;
 }
 
-#scrollHint.hide{
-    opacity:0;
+.real-btn:active{
+    transform:scale(.96);
+}
+
+/* карта */
+
+.map-btn{
+    top:52.4%;
+    right:8%;
+
+    width:30%;
+}
+
+/* тойго келем */
+
+.yes-btn{
+    top:61.4%;
+    right:8%;
+
+    width:20%;
+
+    background:#754526;
+}
+
+/* келе албайм */
+
+.no-btn{
+    top:61.4%;
+    right:29%;
+
+    width:22%;
+
+    background:#eee5da;
+
+    color:#65452f;
+
+    border:1px solid #cdb49b;
+
+    box-shadow:none;
+}
+
+/* аты */
+
+.name-input{
+    position:absolute;
+
+    top:64.9%;
+    right:7.5%;
+
+    width:43%;
+
+    height:38px;
+
+    border-radius:20px;
+
+    border:1px solid #d9c3ad;
+
+    background:rgba(255,250,244,.9);
+
+    padding:0 16px;
+
+    color:#5b412e;
+
+    z-index:30;
+
+    outline:none;
+}
+
+/* конок саны */
+
+.count-input{
+    position:absolute;
+
+    top:68.4%;
+    right:7.5%;
+
+    width:43%;
+
+    height:38px;
+
+    border-radius:20px;
+
+    border:1px solid #d9c3ad;
+
+    background:rgba(255,250,244,.9);
+
+    padding:0 16px;
+
+    color:#5b412e;
+
+    z-index:30;
+
+    outline:none;
+}
+
+/* WhatsApp */
+
+.whatsapp-btn{
+    top:71.6%;
+    right:7.5%;
+
+    width:44%;
+}
+
+/* =========================
+   ТИЛЕК
+========================= */
+
+.wish-input{
+    position:absolute;
+
+    top:77.2%;
+    left:12%;
+
+    width:39%;
+
+    height:55px;
+
+    border-radius:12px;
+
+    border:1px solid #d8c1a8;
+
+    background:rgba(255,250,244,.9);
+
+    padding:12px;
+
+    resize:none;
+
+    color:#5b412e;
+
+    z-index:30;
+
+    outline:none;
+}
+
+.wish-btn{
+    top:82.1%;
+    left:12%;
+
+    width:39%;
+}
+
+/* =========================
+   КЕЛДИМ / КЕЛЕ АЛБАЙМ
+========================= */
+
+.selected{
+    box-shadow:
+        0 0 0 3px rgba(117,69,38,.3);
+}
+
+/* =========================
+   МОБИЛЬ
+========================= */
+
+@media(max-width:600px){
+
+    .real-btn{
+        font-size:9px;
+        padding:7px 8px;
+    }
+
+    .map-btn{
+        top:52.4%;
+        right:7%;
+        width:31%;
+    }
+
+    .yes-btn{
+        top:61.5%;
+        right:7%;
+        width:21%;
+    }
+
+    .no-btn{
+        top:61.5%;
+        right:29%;
+        width:23%;
+    }
+
+    .name-input{
+        top:65%;
+        right:7%;
+        width:44%;
+        height:30px;
+        font-size:10px;
+    }
+
+    .count-input{
+        top:68.5%;
+        right:7%;
+        width:44%;
+        height:30px;
+        font-size:10px;
+    }
+
+    .whatsapp-btn{
+        top:71.8%;
+        right:7%;
+        width:45%;
+    }
+
+    .wish-input{
+        top:77.4%;
+        left:11%;
+        width:40%;
+        height:42px;
+        font-size:10px;
+    }
+
+    .wish-btn{
+        top:82.3%;
+        left:11%;
+        width:40%;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- АЧУУ ЭКРАНЫ -->
+
+<!-- =========================
+     АЧУУ
+========================= -->
+
 <div id="opening">
 
-    <div class="envelope">
+    <div class="open-card">
 
-        <div class="names-small">
+        <div class="open-names">
             Аскар & Ажар
         </div>
 
-        <div class="subtitle">
+        <div class="open-subtitle">
             ҮЙЛӨНҮҮ ТОЮ
         </div>
 
@@ -180,7 +442,9 @@ body{
             ♡
         </div>
 
-        <button class="open-button" id="openButton">
+        <button
+            class="open-btn"
+            id="openBtn">
             АЧУУ
         </button>
 
@@ -189,92 +453,235 @@ body{
 </div>
 
 
-<!-- ЧАКЫРУУ -->
-<main id="invitation">
+<!-- =========================
+     МУЗЫКА
+========================= -->
 
-    <img
-        src="assets/invitation.png"
-        alt="Аскар жана Ажардын үйлөнүү тоюна чакыруу"
-        class="invitation-image"
-    >
+<audio
+    id="music"
+    loop
+    preload="auto">
 
-</main>
+    <source
+        src="assets/wedding-music.mp3"
+        type="audio/mpeg">
 
-
-<!-- МУЗЫКА -->
-<audio id="music" loop preload="auto">
-    <source src="assets/wedding-music.mp3" type="audio/mpeg">
 </audio>
 
 
-<!-- МУЗЫКА БАСҚЫЧЫ -->
-<button id="musicButton" aria-label="Музыканы башкаруу">
+<button
+    id="musicBtn">
     ♫
 </button>
 
 
-<div id="scrollHint">
-    ↓
+<!-- =========================
+     ЧАКЫРУУ
+========================= -->
+
+<div
+    class="invitation"
+    id="invitation">
+
+
+    <img
+        src="assets/invitation.png"
+        alt="Аскар жана Ажар">
+
+
+    <!-- КАРТА -->
+
+    <a
+        class="real-btn map-btn"
+        href="https://2gis.kg/bishkek/geo/70000001033577160"
+        target="_blank">
+
+        КАРТАДАН КӨРҮҮ
+
+    </a>
+
+
+    <!-- ООБА -->
+
+    <button
+        class="real-btn yes-btn"
+        id="yesBtn">
+
+        ✓ Ооба, келебиз
+
+    </button>
+
+
+    <!-- ЖОК -->
+
+    <button
+        class="real-btn no-btn"
+        id="noBtn">
+
+        × Келе албайбыз
+
+    </button>
+
+
+    <!-- АТЫ -->
+
+    <input
+        class="name-input"
+        id="guestName"
+        type="text"
+        placeholder="Атыңызды жазыңыз">
+
+
+    <!-- КОНУКТАР -->
+
+    <input
+        class="count-input"
+        id="guestCount"
+        type="number"
+        min="1"
+        placeholder="Канча киши келесиз?">
+
+
+    <!-- WHATSAPP -->
+
+    <button
+        class="real-btn whatsapp-btn"
+        id="sendRsvp">
+
+        ☎ ЖӨНӨТҮҮ (WhatsApp аркылуу)
+
+    </button>
+
+
+    <!-- ТИЛЕК -->
+
+    <textarea
+        class="wish-input"
+        id="wishText"
+        placeholder="Тилегиңизди жазыңыз..."></textarea>
+
+
+    <button
+        class="real-btn wish-btn"
+        id="sendWish">
+
+        ✈ ЖӨНӨТҮҮ
+
+    </button>
+
 </div>
 
 
 <script>
 
-const opening = document.getElementById("opening");
-const openButton = document.getElementById("openButton");
-const music = document.getElementById("music");
-const musicButton = document.getElementById("musicButton");
-const scrollHint = document.getElementById("scrollHint");
+/* =========================
+   ЭЛЕМЕНТТЕР
+========================= */
 
-let scrolling = false;
-let animationFrame = null;
+const opening =
+    document.getElementById("opening");
+
+const openBtn =
+    document.getElementById("openBtn");
+
+const music =
+    document.getElementById("music");
+
+const musicBtn =
+    document.getElementById("musicBtn");
+
+const yesBtn =
+    document.getElementById("yesBtn");
+
+const noBtn =
+    document.getElementById("noBtn");
+
+const sendRsvp =
+    document.getElementById("sendRsvp");
+
+const sendWish =
+    document.getElementById("sendWish");
+
+const guestName =
+    document.getElementById("guestName");
+
+const guestCount =
+    document.getElementById("guestCount");
+
+const wishText =
+    document.getElementById("wishText");
 
 
-/* АЧУУ */
-openButton.addEventListener("click", async function(){
+/* =========================
+   АЧУУ + МУЗЫКА + АВТО ЖЫЛУУ
+========================= */
 
-    /* Конверт жабылат */
-    opening.classList.add("hide");
+openBtn.addEventListener(
+    "click",
+    async function(){
 
-    /* Музыка башталат */
-    try{
-        await music.play();
-        musicButton.textContent = "Ⅱ";
-    }catch(error){
-        musicButton.textContent = "♫";
+        opening.classList.add("hide");
+
+        try{
+
+            await music.play();
+
+            musicBtn.textContent="Ⅱ";
+
+        }catch(error){
+
+            musicBtn.textContent="♫";
+
+        }
+
+
+        /*
+        Чакыруу ачылгандан кийин
+        өзү акырын жылат
+        */
+
+        setTimeout(
+            startAutoScroll,
+            1000
+        );
+
     }
-
-    /* Бир аздан кийин автоматтык жылуу */
-    setTimeout(function(){
-        startAutoScroll();
-    },1200);
-
-});
+);
 
 
-/* АВТОМАТТЫК ЖЫЛУУ */
+/* =========================
+   АВТОМАТТЫК ЖЫЛУУ
+========================= */
+
+let autoScrolling=false;
+
 function startAutoScroll(){
 
-    if(scrolling) return;
+    if(autoScrolling) return;
 
-    scrolling = true;
+    autoScrolling=true;
 
-    const speed = 0.45;
+    const speed=0.55;
 
-    function move(){
+    function scroll(){
 
-        const current = window.scrollY;
+        if(!autoScrolling)
+            return;
 
-        const maxScroll =
-            document.documentElement.scrollHeight -
+        const current =
+            window.scrollY;
+
+        const max =
+            document.documentElement.scrollHeight
+            -
             window.innerHeight;
 
-        if(current >= maxScroll){
+        if(current >= max){
 
-            scrolling = false;
-            scrollHint.classList.add("hide");
+            autoScrolling=false;
 
             return;
+
         }
 
         window.scrollTo(
@@ -282,38 +689,196 @@ function startAutoScroll(){
             current + speed
         );
 
-        animationFrame =
-            requestAnimationFrame(move);
+        requestAnimationFrame(scroll);
+
     }
 
-    animationFrame =
-        requestAnimationFrame(move);
+    requestAnimationFrame(scroll);
+
 }
 
 
-/* МУЗЫКАНЫ КОЛ МЕНЕН БАШКАРУУ */
-musicButton.addEventListener("click",function(){
+/* =========================
+   МУЗЫКА
+========================= */
 
-    if(music.paused){
+musicBtn.addEventListener(
+    "click",
+    function(){
 
-        music.play().then(function(){
+        if(music.paused){
 
-            musicButton.textContent = "Ⅱ";
+            music.play();
 
-        }).catch(function(){
+            musicBtn.textContent="Ⅱ";
 
-            musicButton.textContent = "♫";
+        }else{
 
-        });
+            music.pause();
 
-    }else{
+            musicBtn.textContent="♫";
 
-        music.pause();
+        }
 
-        musicButton.textContent = "♫";
     }
+);
 
-});
+
+/* =========================
+   КЕЛЕБИЗ
+========================= */
+
+yesBtn.addEventListener(
+    "click",
+    function(){
+
+        yesBtn.classList.add("selected");
+
+        noBtn.classList.remove("selected");
+
+    }
+);
+
+
+/* =========================
+   КЕЛЕ АЛБАЙБЫЗ
+========================= */
+
+noBtn.addEventListener(
+    "click",
+    function(){
+
+        noBtn.classList.add("selected");
+
+        yesBtn.classList.remove("selected");
+
+    }
+);
+
+
+/* =========================
+   WHATSAPP
+========================= */
+
+sendRsvp.addEventListener(
+    "click",
+    function(){
+
+        const name =
+            guestName.value.trim();
+
+        const count =
+            guestCount.value.trim();
+
+        let answer="";
+
+        if(
+            yesBtn.classList.contains("selected")
+        ){
+
+            answer="Ооба, келебиз";
+
+        }else if(
+            noBtn.classList.contains("selected")
+        ){
+
+            answer="Келе албайбыз";
+
+        }else{
+
+            answer="Жооп белгисиз";
+
+        }
+
+
+        const message =
+            "Саламатсызбы! Аскар & Ажардын тоюна байланыштуу:%0A%0A"
+            +
+            "Аты: "
+            +
+            encodeURIComponent(name || "Көрсөтүлгөн эмес")
+            +
+            "%0A"
+            +
+            "Жооп: "
+            +
+            encodeURIComponent(answer)
+            +
+            "%0A"
+            +
+            "Коноктордун саны: "
+            +
+            encodeURIComponent(count || "Көрсөтүлгөн эмес");
+
+
+        /*
+        Бул номерди кийин
+        той ээлеринин чыныгы
+        WhatsApp номерине алмаштырабыз.
+        */
+
+        const phone="996700000000";
+
+
+        window.open(
+            "https://wa.me/"
+            +
+            phone
+            +
+            "?text="
+            +
+            message,
+            "_blank"
+        );
+
+    }
+);
+
+
+/* =========================
+   ТИЛЕК ЖӨНӨТҮҮ
+========================= */
+
+sendWish.addEventListener(
+    "click",
+    function(){
+
+        const wish =
+            wishText.value.trim();
+
+        if(!wish){
+
+            alert(
+                "Алгач тилегиңизди жазыңыз ❤️"
+            );
+
+            return;
+
+        }
+
+
+        const message =
+            "Аскар & Ажарга тилек:%0A%0A"
+            +
+            encodeURIComponent(wish);
+
+
+        const phone="996705206363";
+
+
+        window.open(
+            "https://wa.me/"
+            +
+            phone
+            +
+            "?text="
+            +
+            message,
+            "_blank"
+        );
+
+    }
+);
 
 </script>
 
